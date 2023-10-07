@@ -1,6 +1,6 @@
 /*
 Autor: Carol Arevalo
-Para compilar: gcc -o riemann riemann.c -lm
+Para compilar: gcc -o riemann_omp riemann_omp.c -lm -fopenmp
 Fecha: viernes 11 de agosto de 2022
 Version: 1.0
 */
@@ -15,6 +15,10 @@ Version: 1.0
 double f1(double x) {
     return x * x; // Se define la funcion x^2
 }
+
+// double f2(double x) {
+//     return exp(-x * x) * cos(x * x) * sin(x) + sqrt(x);
+// }
 
 double f2(double x) {
     return 2 * x * x * x; // Se define la funcion 2x^3
@@ -42,10 +46,10 @@ double trapezoides(double a, double b, int n, double (*func)(double)) {
 //Funcion principal
 int main(int argc, char* argv[]) {
     // Parametros por defecto
-    double a = 2.0; 
-    double b = 10.0; 
+    double a = 0.0; 
+    double b = 1000.0; 
     int num_threads = 4;
-    int n = 1000000; // Valor por defecto para n 
+    int n = 10000000; // Valor por defecto para n 
 
     // Si se ingresan parametros, se toman esos valores
     if (argc > 3) {
@@ -68,7 +72,7 @@ int main(int argc, char* argv[]) {
         double a_local = a + thread_id * n_local * h; // Se calcula el limite inferior de cada hilo
         double b_local = a_local + n_local * h; // Se calcula el limite superior de cada hilo
 
-        double local_sum = trapezoides(a_local, b_local, n_local, f1);  // Se calcula la suma de las alturas de los trapecios de cada hilo
+        double local_sum = trapezoides(a_local, b_local, n_local, f2);  // Se calcula la suma de las alturas de los trapecios de cada hilo
 
         local_sums[thread_id] = local_sum; // Se guarda el resultado local
     }

@@ -1,6 +1,6 @@
 /*
 Autor: Carol Arevalo
-Para compilar: gcc -o riemann riemann.c -lm
+Para compilar: gcc -o riemann_sec riemann_sec.c -lm
 Fecha: viernes 11 de agosto de 2022
 Version: 1.0
 */
@@ -11,6 +11,11 @@ Version: 1.0
 #include <math.h>
 
 // Funciones
+
+// double f2(double x) {
+//     return exp(-x * x) * cos(x * x) * sin(x) + sqrt(x);
+// }
+
 double f1(double x) {
     return x * x; // Se define la funcion x^2
 }
@@ -42,9 +47,9 @@ double trapezoides(double a, double b, int n, double (*func)(double)) {
 int main(int argc, char* argv[]) {
 
     // Parametros por defecto
-    double a = 2.0; 
-    double b = 10.0; 
-    int n = 4;
+    double a = 2; 
+    double b = 10; 
+    int n = 1000;
 
     // Si se ingresan parametros, se toman esos valores
     if (argc > 1) {
@@ -54,15 +59,15 @@ int main(int argc, char* argv[]) {
     }
 
     // Se calcula la integral para cada funcion
-    double result1 = trapezoides(a, b, n, f1); // Se calcula la integral para x^2
+    // double result1 = trapezoides(a, b, n, f1); // Se calcula la integral para x^2
     double result2 = trapezoides(a, b, n, f2); // Se calcula la integral para 2x^3
-    double result3 = trapezoides(a, b, n, f3); // Se calcula la integral para sin(x)
+    // double result3 = trapezoides(a, b, n, f3); // Se calcula la integral para sin(x)
 
     // Se imprimen los resultados
     printf("Con n = %d trapezoides, nuestra aproximacion de la integral de %.6lf a %.6lf:\n", n, a, b);
-    printf("Para x^2: %.10lf\n", result1);
-    printf("Para 2x^3: %.10lf\n", result2);
-    printf("Para sin(x): %.10lf\n", result3);
+    // printf("Para x^2: %.10lf\n", result1);
+    printf("Para (2x^3)  %.10lf\n", result2);
+    // printf("Para sin(x): %.10lf\n", result3);
 
     return 0;
 }

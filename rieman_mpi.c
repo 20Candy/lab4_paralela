@@ -2,21 +2,29 @@
 //Corto 3 paralela
 
 //compilacion
-//mpicc ejercicio3.c -o ejercicio3
-//mpirun -np 4 ./ejercicio3
+//mpicc rieman_mpi.c -o rieman_mpi -lm
+//mpirun -np 4 ./rieman_mpi
 
 #include <stdio.h>
 #include <mpi.h>
+#include <math.h>
 
-// Fuución a integrar de ejemplo: f(x) = x^2
+
+// // Funcio compleja
+// double f(double x) {
+//     return exp(-x * x) * cos(x * x) * sin(x) + sqrt(x);
+// }
+
+
+// Fuución a integrar 2x^3
 double f(double x) {
-    return x * x;
+    return 2 * x * x * x; // Se define la funcion 2x^3
 }
 
 int main(int argc, char* argv[]) {
     int rank, size;
-    double a = 0.0, b = 1.0;  // Intervalo [a, b]
-    int n = 10000;  // Número total de subintervalos
+    double a = 2, b = 10;  // Intervalo [a, b]
+    int n = 1000;  // Número total de subintervalos
     double h = (b - a) / n;  // Tamaño de un subintervalo
     double local_sum = 0.0;
     double integral;
